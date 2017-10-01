@@ -8,9 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight;
 
     Rigidbody2D rigid;
+    Animator anim;
 
     bool hasJumped = false;
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     private void Awake()
     {
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
@@ -18,7 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal") * playerMovementSpeed * Time.deltaTime, 0, 0));
+        //anim.SetFloat("Speed",Mathf.Abs(playerMovementSpeed));
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)|| Input.GetKey(KeyCode.LeftArrow)|| Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(new Vector3(Input.GetAxis("Horizontal") * playerMovementSpeed * Time.deltaTime, 0, 0));
+            anim.SetInteger("setMove", 1);
+        }
+        else
+            anim.SetInteger("setMove", 0);
        
     }
     private void FixedUpdate()
